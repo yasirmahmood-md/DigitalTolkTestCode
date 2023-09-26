@@ -1,13 +1,14 @@
 <?php
 
-namespace DTApi\Repository;
+namespace DTApi\Repository\Bookings;
 
-use Validator;
-use Illuminate\Database\Eloquent\Model;
+use DTApi\Contracts\Bookings\BaseInterface;
 use DTApi\Exceptions\ValidationException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Validator;
 
-class BaseRepository
+class BaseRepository implements BaseInterface
 {
 
     /**
@@ -31,7 +32,7 @@ class BaseRepository
     /**
      * @return array
      */
-    public function validatorAttributeNames()
+    public function validatorAttributeNames(): array
     {
         return [];
     }
@@ -39,7 +40,7 @@ class BaseRepository
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -71,7 +72,7 @@ class BaseRepository
      * @return Model
      * @throws ModelNotFoundException
      */
-    public function findOrFail($id)
+    public function findOrFail($id): Model
     {
         return $this->model->findOrFail($id);
     }
@@ -81,7 +82,7 @@ class BaseRepository
      * @return Model
      * @throws ModelNotFoundException
      */
-    public function findBySlug($slug)
+    public function findBySlug($slug): Model
     {
 
         return $this->model->where('slug', $slug)->first();
@@ -91,7 +92,7 @@ class BaseRepository
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query()
+    public function query(): \Illuminate\Database\Eloquent\Builder
     {
         return $this->model->query();
     }
@@ -100,7 +101,7 @@ class BaseRepository
      * @param array $attributes
      * @return Model
      */
-    public function instance(array $attributes = [])
+    public function instance(array $attributes = []): Model
     {
         $model = $this->model;
         return new $model($attributes);
@@ -127,7 +128,7 @@ class BaseRepository
      * @param array $customAttributes
      * @return \Illuminate\Validation\Validator
      */
-    public function validator(array $data = [], $rules = null, array $messages = [], array $customAttributes = [])
+    public function validator(array $data = [], $rules = null, array $messages = [], array $customAttributes = []): \Illuminate\Validation\Validator
     {
         if (is_null($rules)) {
             $rules = $this->validationRules;
@@ -144,7 +145,7 @@ class BaseRepository
      * @return bool
      * @throws ValidationException
      */
-    public function validate(array $data = [], $rules = null, array $messages = [], array $customAttributes = [])
+    public function validate(array $data = [], $rules = null, array $messages = [], array $customAttributes = []): bool
     {
         $validator = $this->validator($data, $rules, $messages, $customAttributes);
         return $this->_validate($validator);
@@ -154,7 +155,7 @@ class BaseRepository
      * @param array $data
      * @return Model
      */
-    public function create(array $data = [])
+    public function create(array $data = []): Model
     {
         return $this->model->create($data);
     }
@@ -164,7 +165,7 @@ class BaseRepository
      * @param array $data
      * @return Model
      */
-    public function update($id, array $data = [])
+    public function update($id, array $data = []): Model
     {
         $instance = $this->findOrFail($id);
         $instance->update($data);
@@ -176,7 +177,7 @@ class BaseRepository
      * @return Model
      * @throws \Exception
      */
-    public function delete($id)
+    public function delete($id): Model
     {
         $model = $this->findOrFail($id);
         $model->delete();

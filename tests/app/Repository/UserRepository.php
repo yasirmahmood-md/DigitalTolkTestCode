@@ -2,21 +2,22 @@
 
 namespace DTApi\Repository;
 
+use DTApi\Events\JobWasCreated;
 use DTApi\Models\Company;
 use DTApi\Models\Department;
-use DTApi\Models\Type;
-use DTApi\Models\UsersBlacklist;
-use Illuminate\Support\Facades\Log;
-use Monolog\Logger;
-use DTApi\Models\User;
 use DTApi\Models\Town;
-use DTApi\Models\UserMeta;
-use DTApi\Models\UserTowns;
-use DTApi\Events\JobWasCreated;
+use DTApi\Models\Type;
+use DTApi\Models\User;
 use DTApi\Models\UserLanguages;
-use Monolog\Handler\StreamHandler;
+use DTApi\Models\UserMeta;
+use DTApi\Models\UsersBlacklist;
+use DTApi\Models\UserTowns;
+use DTApi\Repository\Bookings\BaseRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Monolog\Handler\FirePHPHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 /**
  * Class BookingRepository
